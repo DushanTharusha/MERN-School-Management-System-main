@@ -4,10 +4,9 @@ const client = require('prom-client');
 const register = new client.Registry();
 client.collectDefaultMetrics({ register });
 
-
 // Define counters
 
-// admin 
+// Admin
 const adminLoginCounter = new client.Counter({
   name: 'admin_logins_total',
   help: 'Total number of admin logins',
@@ -18,59 +17,104 @@ const adminRegisterCounter = new client.Counter({
   help: 'Total number of admin registrations',
 });
 
-// student
+// Student
 const studentRegisterRequests = new client.Counter({
-    name: 'student_register_requests_total',
-    help: 'Total number of student registration attempts'
-  });
-  
-  const studentRegisterSuccess = new client.Counter({
-    name: 'student_register_success_total',
-    help: 'Total number of successful student registrations'
-  });
-  
-  const studentLoginRequests = new client.Counter({
-    name: 'student_login_requests_total',
-    help: 'Total number of student login attempts'
-  });
-  
-  const studentLoginSuccess = new client.Counter({
-    name: 'student_login_success_total',
-    help: 'Total number of successful student logins'
-  });
-  
-  const getStudentsRequests = new client.Counter({
-    name: 'get_students_requests_total',
-    help: 'Total number of requests to fetch students list'
-  });
-  
-  const deleteStudentRequests = new client.Counter({
-    name: 'delete_student_requests_total',
-    help: 'Total number of delete student requests'
-  });
-  
-  const studentAttendanceRequests = new client.Counter({
-    name: 'student_attendance_requests_total',
-    help: 'Total number of requests for student attendance'
-  });
+  name: 'student_register_requests_total',
+  help: 'Total number of student registration attempts'
+});
 
-  const updateStudentRequests = new client.Counter({
-    name: 'update_student_requests_total',
-    help: 'Total number of update student requests',
-  });
-  
-  const updateStudentSuccess = new client.Counter({
-    name: 'update_student_success_total',
-    help: 'Total number of successful student updates',
-  });
+const studentRegisterSuccess = new client.Counter({
+  name: 'student_register_success_total',
+  help: 'Total number of successful student registrations'
+});
 
+const studentLoginRequests = new client.Counter({
+  name: 'student_login_requests_total',
+  help: 'Total number of student login attempts'
+});
+
+const studentLoginSuccess = new client.Counter({
+  name: 'student_login_success_total',
+  help: 'Total number of successful student logins'
+});
+
+const getStudentsRequests = new client.Counter({
+  name: 'get_students_requests_total',
+  help: 'Total number of requests to fetch students list'
+});
+
+const deleteStudentRequests = new client.Counter({
+  name: 'delete_student_requests_total',
+  help: 'Total number of delete student requests'
+});
+
+const studentAttendanceRequests = new client.Counter({
+  name: 'student_attendance_requests_total',
+  help: 'Total number of requests for student attendance'
+});
+
+const updateStudentRequests = new client.Counter({
+  name: 'update_student_requests_total',
+  help: 'Total number of update student requests',
+});
+
+const updateStudentSuccess = new client.Counter({
+  name: 'update_student_success_total',
+  help: 'Total number of successful student updates',
+});
+
+// Teacher
+const teacherRegisterRequests = new client.Counter({
+  name: 'teacher_register_requests_total',
+  help: 'Total number of teacher registration attempts'
+});
+
+const teacherRegisterSuccess = new client.Counter({
+  name: 'teacher_register_success_total',
+  help: 'Total number of successful teacher registrations'
+});
+
+const teacherLoginRequests = new client.Counter({
+  name: 'teacher_login_requests_total',
+  help: 'Total number of teacher login attempts'
+});
+
+const teacherLoginSuccess = new client.Counter({
+  name: 'teacher_login_success_total',
+  help: 'Total number of successful teacher logins'
+});
+
+const getTeachersRequests = new client.Counter({
+  name: 'get_teachers_requests_total',
+  help: 'Total number of requests to fetch teachers list'
+});
+
+const getTeacherDetailRequests = new client.Counter({
+  name: 'get_teacher_detail_requests_total',
+  help: 'Total number of requests to fetch teacher details'
+});
+
+const updateTeacherRequests = new client.Counter({
+  name: 'update_teacher_requests_total',
+  help: 'Total number of update teacher requests'
+});
+
+const deleteTeacherRequests = new client.Counter({
+  name: 'delete_teacher_requests_total',
+  help: 'Total number of delete teacher requests'
+});
+
+const teacherAttendanceRequests = new client.Counter({
+  name: 'teacher_attendance_requests_total',
+  help: 'Total number of requests for teacher attendance'
+});
 
 // Register the metrics
-//admin
+// Admin
 register.registerMetric(adminLoginCounter);
 register.registerMetric(adminRegisterCounter);
 
-//students
+// Students
 register.registerMetric(studentRegisterRequests);
 register.registerMetric(studentRegisterSuccess);
 register.registerMetric(studentLoginRequests);
@@ -80,6 +124,17 @@ register.registerMetric(deleteStudentRequests);
 register.registerMetric(studentAttendanceRequests);
 register.registerMetric(updateStudentRequests);
 register.registerMetric(updateStudentSuccess);
+
+// Teachers
+register.registerMetric(teacherRegisterRequests);
+register.registerMetric(teacherRegisterSuccess);
+register.registerMetric(teacherLoginRequests);
+register.registerMetric(teacherLoginSuccess);
+register.registerMetric(getTeachersRequests);
+register.registerMetric(getTeacherDetailRequests);
+register.registerMetric(updateTeacherRequests);
+register.registerMetric(deleteTeacherRequests);
+register.registerMetric(teacherAttendanceRequests);
 
 module.exports = {
   register,
@@ -93,5 +148,14 @@ module.exports = {
   deleteStudentRequests,
   studentAttendanceRequests,
   updateStudentRequests,
-  updateStudentSuccess
+  updateStudentSuccess,
+  teacherRegisterRequests,
+  teacherRegisterSuccess,
+  teacherLoginRequests,
+  teacherLoginSuccess,
+  getTeachersRequests,
+  getTeacherDetailRequests,
+  updateTeacherRequests,
+  deleteTeacherRequests,
+  teacherAttendanceRequests
 };

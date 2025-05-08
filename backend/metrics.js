@@ -63,6 +63,67 @@ const updateStudentSuccess = new client.Counter({
   help: 'Total number of successful student updates',
 });
 
+
+// classes
+const classCreateRequests = new client.Counter({
+  name: 'class_create_requests_total',
+  help: 'Total number of class creation attempts',
+});
+
+const classCreateSuccess = new client.Counter({
+  name: 'class_create_success_total',
+  help: 'Total number of successful class creations',
+});
+
+const classCreateFailures = new client.Counter({
+  name: 'class_create_failures_total',
+  help: 'Total number of failed class creation attempts',
+});
+
+const classListRequests = new client.Counter({
+  name: 'class_list_requests_total',
+  help: 'Total number of requests to list classes',
+});
+
+const classDetailRequests = new client.Counter({
+  name: 'class_detail_requests_total',
+  help: 'Total number of requests to retrieve class details',
+});
+
+const classStudentsRequests = new client.Counter({
+  name: 'class_students_requests_total',
+  help: 'Total number of requests to retrieve students of a class',
+});
+
+const classDeleteRequests = new client.Counter({
+  name: 'class_delete_requests_total',
+  help: 'Total number of class deletion attempts',
+});
+
+const classDeleteSuccess = new client.Counter({
+  name: 'class_delete_success_total',
+  help: 'Total number of successful class deletions',
+});
+
+const classDeleteFailures = new client.Counter({
+  name: 'class_delete_failures_total',
+  help: 'Total number of failed class deletion attempts',
+});
+
+const classesDeleteRequests = new client.Counter({
+  name: 'classes_delete_requests_total',
+  help: 'Total number of bulk class deletion attempts',
+});
+
+const classesDeleteSuccess = new client.Counter({
+  name: 'classes_delete_success_total',
+  help: 'Total number of successful bulk class deletions',
+});
+
+const classesDeleteFailures = new client.Counter({
+  name: 'classes_delete_failures_total',
+  help: 'Total number of failed bulk class deletion attempts',
+});
 // Teacher
 const teacherRegisterRequests = new client.Counter({
   name: 'teacher_register_requests_total',
@@ -125,6 +186,20 @@ register.registerMetric(studentAttendanceRequests);
 register.registerMetric(updateStudentRequests);
 register.registerMetric(updateStudentSuccess);
 
+//classes
+register.registerMetric(classCreateRequests);
+register.registerMetric(classCreateSuccess);
+register.registerMetric(classCreateFailures);
+register.registerMetric(classListRequests);
+register.registerMetric(classDetailRequests);
+register.registerMetric(classStudentsRequests);
+register.registerMetric(classDeleteRequests);
+register.registerMetric(classDeleteSuccess);
+register.registerMetric(classDeleteFailures);
+register.registerMetric(classesDeleteRequests);
+register.registerMetric(classesDeleteSuccess);
+register.registerMetric(classesDeleteFailures);
+
 // Teachers
 register.registerMetric(teacherRegisterRequests);
 register.registerMetric(teacherRegisterSuccess);
@@ -148,6 +223,19 @@ module.exports = {
   deleteStudentRequests,
   studentAttendanceRequests,
   updateStudentRequests,
+  updateStudentSuccess,
+  classCreateRequests,
+  classCreateSuccess,
+  classCreateFailures,
+  classListRequests,
+  classDetailRequests,
+  classStudentsRequests,
+  classDeleteRequests,
+  classDeleteSuccess,
+  classDeleteFailures,
+  classesDeleteRequests,
+  classesDeleteSuccess,
+  classesDeleteFailures
   updateStudentSuccess,
   teacherRegisterRequests,
   teacherRegisterSuccess,

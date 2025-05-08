@@ -45,9 +45,6 @@ const subjectCreate = async (req, res) => {
     }
   };
   
-
-
-
 const allSubjects = async (req, res) => {
     try {
         let subjects = await Subject.find({ school: req.params.id })
@@ -176,5 +173,14 @@ const deleteSubjectsByClass = async (req, res) => {
     }
 };
 
+const updateSubjectGauges = async () => {
+    const total = await Subject.countDocuments();
+    const assigned = await Subject.countDocuments({ teacher: { $exists: true } });
+    const unassigned = total - assigned;
+  
+    subjectTotalActive.set(total);
+    subjectAssigned.set(assigned);
+    subjectUnassigned.set(unassigned);
+  };
 
 module.exports = { subjectCreate, freeSubjectList, classSubjects, getSubjectDetail, deleteSubjectsByClass, deleteSubjects, deleteSubject, allSubjects };

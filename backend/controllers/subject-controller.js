@@ -2,7 +2,18 @@ const Subject = require('../models/subjectSchema.js');
 const Teacher = require('../models/teacherSchema.js');
 const Student = require('../models/studentSchema.js');
 
-
+// import Prometheus metrics
+const {
+    subjectCreateRequests,
+    subjectCreateSuccess,
+    subjectCreateFailure,
+    subjectDuplicateSubCode,
+    subjectRequestDuration,
+    subjectTotalActive,
+    subjectAssigned,
+    subjectUnassigned
+  } = require('../metrics/subjectMetrics');
+  
 const subjectCreate = async (req, res) => {
     subjectCreateRequests.inc(); // metric: count every create request
     const end = subjectRequestDuration.startTimer({ operation: 'create' }); // metric: track duration

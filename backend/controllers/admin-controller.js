@@ -7,7 +7,9 @@ const Subject = require('../models/subjectSchema.js');
 const Notice = require('../models/noticeSchema.js');
 const Complain = require('../models/complainSchema.js');
 
-const { adminLoginCounter, adminRegisterCounter } = require('../metrics');
+const { adminLoginCounter, adminRegisterCounter, adminRegistrationSuccess,
+    adminLoginSuccess,
+    adminDetailRequests } = require('../metrics');
 
 
 // const adminRegister = async (req, res) => {
@@ -59,12 +61,11 @@ const { adminLoginCounter, adminRegisterCounter } = require('../metrics');
 // };
 
 const adminRegister = async (req, res) => {
+    adminRegisterCounter.inc(); // INCREMENT registration metric
     try {
         const admin = new Admin({
             ...req.body
         });
-
-        adminRegisterCounter.inc(); // INCREMENT registration metric
 
         const existingAdminByEmail = await Admin.findOne({ email: req.body.email });
         const existingSchool = await Admin.findOne({ schoolName: req.body.schoolName });
@@ -77,6 +78,7 @@ const adminRegister = async (req, res) => {
         }
         else {
             let result = await admin.save();
+            adminRegistrationSuccess.inc(); //
             result.password = undefined;
             res.send(result);
         }
@@ -86,13 +88,14 @@ const adminRegister = async (req, res) => {
 };
 
 const adminLogIn = async (req, res) => {
+    adminLoginCounter.inc(); // INCREMENT login metric
     if (req.body.email && req.body.password) {
         let admin = await Admin.findOne({ email: req.body.email });
         if (admin) {
             if (req.body.password === admin.password) {
                 admin.password = undefined;
                 res.send(admin);
-                adminLoginCounter.inc(); // INCREMENT login metric
+                adminLoginSuccess.inc(); // count successful login
 
             } else {
                 res.send({ message: "Invalid password" });
@@ -110,6 +113,7 @@ const getAdminDetail = async (req, res) => {
         let admin = await Admin.findById(req.params.id);
         if (admin) {
             admin.password = undefined;
+            adminDetailRequests.inc(); // count detail fetch
             res.send(admin);
         }
         else {

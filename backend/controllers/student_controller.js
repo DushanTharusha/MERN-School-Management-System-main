@@ -8,9 +8,10 @@ const {
     studentLoginRequests,
     studentLoginSuccess,
     getStudentsRequests,
+    getStudentRequests,
     deleteStudentRequests,
     studentAttendanceRequests,
-    updateStudentRequests,
+    updateexamresultsRequests,
     updateStudentSuccess
   } = require('../metrics'); // adjust path if needed
   
@@ -99,7 +100,9 @@ const getStudentDetail = async (req, res) => {
             .populate("attendance.subName", "subName sessions");
         if (student) {
             student.password = undefined;
+            getStudentRequests.inc();
             res.send(student);
+            
         }
         else {
             res.send({ message: "No student found" });
@@ -146,7 +149,7 @@ const deleteStudentsByClass = async (req, res) => {
 }
 
 const updateStudent = async (req, res) => {
-    updateStudentRequests.inc();
+    updateexamresultsRequests.inc();
     try {
         if (req.body.password) {
             const salt = await bcrypt.genSalt(10)
@@ -165,6 +168,7 @@ const updateStudent = async (req, res) => {
 }
 
 const updateExamResult = async (req, res) => {
+    updateexamresultsRequests.inc();
     const { subName, marksObtained } = req.body;
 
     try {

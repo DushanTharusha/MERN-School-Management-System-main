@@ -17,6 +17,77 @@ const adminRegisterCounter = new client.Counter({
   help: 'Total number of admin registrations',
 });
 
+
+const adminRegistrationSuccess = new client.Counter({
+  name: 'admin_registration_success_total',
+  help: 'Total number of successful admin registrations',
+});
+
+const adminLoginSuccess = new client.Counter({
+  name: 'admin_login_success_total',
+  help: 'Total number of successful admin logins',
+});
+
+const adminDetailRequests = new client.Counter({
+  name: 'admin_detail_requests_total',
+  help: 'Total number of admin detail fetch requests',
+});
+
+// student
+const studentRegisterRequests = new client.Counter({
+    name: 'student_register_requests_total',
+    help: 'Total number of student registration attempts'
+  });
+  
+  const studentRegisterSuccess = new client.Counter({
+    name: 'student_register_success_total',
+    help: 'Total number of successful student registrations'
+  });
+  
+  const studentLoginRequests = new client.Counter({
+    name: 'student_login_requests_total',
+    help: 'Total number of student login attempts'
+  });
+  
+  const studentLoginSuccess = new client.Counter({
+    name: 'student_login_success_total',
+    help: 'Total number of successful student logins'
+  });
+  
+  const getStudentsRequests = new client.Counter({
+    name: 'get_students_requests_total',
+    help: 'Total number of requests to fetch students list'
+  });
+
+  const getStudentRequests = new client.Counter({
+    name: 'get_astudent_requests_total',
+    help: 'Total number of requests to fetch a student list'
+  });
+  
+  const deleteStudentRequests = new client.Counter({
+    name: 'delete_student_requests_total',
+    help: 'Total number of delete student requests'
+  });
+  
+  const studentAttendanceRequests = new client.Counter({
+    name: 'student_attendance_requests_total',
+    help: 'Total number of requests for student attendance'
+  });
+
+  const updateexamresultsRequests = new client.Counter({
+    name: 'update_student_examresult_requests_total',
+    help: 'Total number of update student exam result requests',
+  });
+  
+  const updateStudentSuccess = new client.Counter({
+    name: 'update_student_success_total',
+    help: 'Total number of successful student updates',
+  });
+
+
+// Register the metrics
+//admin
+=======
 // ==============================
 // Student Metrics
 // ==============================
@@ -169,8 +240,12 @@ const subjectUnassigned = new client.Gauge({
 // ==============================
 
 // Admin
+
 register.registerMetric(adminLoginCounter);
 register.registerMetric(adminRegisterCounter);
+register.registerMetric(adminRegistrationSuccess);
+register.registerMetric(adminLoginSuccess);
+register.registerMetric(adminDetailRequests);
 
 // Students
 register.registerMetric(studentRegisterRequests);
@@ -178,9 +253,10 @@ register.registerMetric(studentRegisterSuccess);
 register.registerMetric(studentLoginRequests);
 register.registerMetric(studentLoginSuccess);
 register.registerMetric(getStudentsRequests);
+register.registerMetric(getStudentRequests);
 register.registerMetric(deleteStudentRequests);
 register.registerMetric(studentAttendanceRequests);
-register.registerMetric(updateStudentRequests);
+register.registerMetric(updateexamresultsRequests);
 register.registerMetric(updateStudentSuccess);
 
 // Subjects
@@ -211,14 +287,25 @@ module.exports = {
   // Admin
   adminLoginCounter,
   adminRegisterCounter,
+
+  adminRegistrationSuccess,
+  adminLoginSuccess,
+  adminDetailRequests,
+=======
   // Student
+
   studentRegisterRequests,
   studentRegisterSuccess,
   studentLoginRequests,
   studentLoginSuccess,
   getStudentsRequests,
+  getStudentRequests,
   deleteStudentRequests,
   studentAttendanceRequests,
+
+  updateexamresultsRequests,
+  updateStudentSuccess
+=======
   updateStudentRequests,
   updateStudentSuccess,
   // Subject
@@ -241,4 +328,5 @@ module.exports = {
   subjectTotalActive,
   subjectAssigned,
   subjectUnassigned
+
 };

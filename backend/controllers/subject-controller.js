@@ -2,38 +2,49 @@ const Subject = require('../models/subjectSchema.js');
 const Teacher = require('../models/teacherSchema.js');
 const Student = require('../models/studentSchema.js');
 
+
 const subjectCreate = async (req, res) => {
     subjectCreateRequests.inc(); // metric: count every create request
     const end = subjectRequestDuration.startTimer({ operation: 'create' }); // metric: track duration
-
+  
     try {
-        const subjects = req.body.subjects.map((subject) => ({
-            subName: subject.subName,
-            subCode: subject.subCode,
-            sessions: subject.sessions,
-        }));
-
-        const existingSubjectBySubCode = await Subject.findOne({
-            'subjects.subCode': subjects[0].subCode,
-            school: req.body.adminID,
-        });
-
-        if (existingSubjectBySubCode) {
-            res.send({ message: 'Sorry this subcode must be unique as it already exists' });
-        } else {
-            const newSubjects = subjects.map((subject) => ({
-                ...subject,
-                sclassName: req.body.sclassName,
-                school: req.body.adminID,
-            }));
-
-            const result = await Subject.insertMany(newSubjects);
-            res.send(result);
-        }
+      const subjects = req.body.subjects.map((subject) => ({
+        subName: subject.subName,
+        subCode: subject.subCode,
+        sessions: subject.sessions,
+      }));
+  
+      const existingSubjectBySubCode = await Subject.findOne({
+        'subjects.subCode': subjects[0].subCode,
+        school: req.body.adminID,
+      });
+  
+      if (existingSubjectBySubCode) {
+        subjectDuplicateSubCode.inc(); // metric: duplicate detected
+        subjectCreateFailure.inc();    // metric: failed create
+        end(); // stop timer
+        return res.send({ message: 'Sorry this subcode must be unique as it already exists' });
+      }
+  
+      const newSubjects = subjects.map((subject) => ({
+        ...subject,
+        sclassName: req.body.sclassName,
+        school: req.body.adminID,
+      }));
+  
+      const result = await Subject.insertMany(newSubjects);
+  
+      subjectCreateSuccess.inc();     // metric: successful create
+      await updateSubjectGauges();    // metric: update total/assigned/unassigned
+      end(); // stop timer
+      res.send(result);
     } catch (err) {
-        res.status(500).json(err);
+      subjectCreateFailure.inc();     // metric: failed due to exception
+      end(); // stop timer
+      res.status(500).json(err);
     }
-};
+  };
+  
 
 
 

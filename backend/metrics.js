@@ -235,7 +235,7 @@ module.exports = {
   classDeleteFailures,
   classesDeleteRequests,
   classesDeleteSuccess,
-  classesDeleteFailures
+  classesDeleteFailures,
   updateStudentSuccess,
   teacherRegisterRequests,
   teacherRegisterSuccess,

@@ -3,6 +3,9 @@ const Teacher = require('../models/teacherSchema.js');
 const Student = require('../models/studentSchema.js');
 
 const subjectCreate = async (req, res) => {
+    subjectCreateRequests.inc(); // metric: count every create request
+    const end = subjectRequestDuration.startTimer({ operation: 'create' }); // metric: track duration
+
     try {
         const subjects = req.body.subjects.map((subject) => ({
             subName: subject.subName,
@@ -31,6 +34,8 @@ const subjectCreate = async (req, res) => {
         res.status(500).json(err);
     }
 };
+
+
 
 const allSubjects = async (req, res) => {
     try {
